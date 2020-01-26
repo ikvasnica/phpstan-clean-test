@@ -1,0 +1,20 @@
+parameters:
+	ikvasnica:
+		classesAllowedToBeExtendedInTests:
+			- PHPUnit\Framework\TestCase
+		unitTestNamespaceContainsString: Unit
+
+parametersSchema:
+	ikvasnica: structure([
+		classesAllowedToBeExtendedInTests: listOf(string()),
+		unitTestNamespaceContainsString: string()
+	])
+
+services:
+	-
+		class: ikvasnica\PHPStan\Rules\UnitExtendsFromTestCaseRule
+		arguments:
+			classesAllowedToBeExtendedInTests: %ikvasnica.classesAllowedToBeExtendedInTests%
+			unitTestNamespaceContainsString: %ikvasnica.unitTestNamespaceContainsString%
+		tags:
+			- phpstan.rules.rule

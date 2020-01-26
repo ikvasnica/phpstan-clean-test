@@ -1,0 +1,69 @@
+{
+    "name": "ikvasnica/phpstan-clean-test",
+    "description": "PHPStan extension with opinionated strict rules for better code in tests.",
+	"keywords": [
+		"phpstan",
+		"phpstan-rules",
+		"phpstan-strict-rules",
+		"tests"
+	],
+    "type": "phpstan-extension",
+    "license": "MIT",
+	"homepage": "https://github.com/ikvasnica/phpstan-clean-test",
+    "authors": [
+        {
+            "name": "Ivan Kvasnica",
+            "email": "ivan@ikvasnica.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "~7.1",
+        "phpstan/phpstan": "~0.11.15 || ~0.12.0"
+    },
+    "require-dev": {
+        "ergebnis/phpstan-rules": "^0.14.2",
+        "phpstan/extension-installer": "^1.0",
+        "phpstan/phpstan-strict-rules": "~0.11 || ~0.12",
+        "phpunit/phpunit": "^8.5",
+        "symplify/easy-coding-standard": "^7.0"
+    },
+	"scripts": {
+		"check-all": [
+			"@cs",
+			"@phpstan",
+			"phpunit --do-not-cache-result"
+		],
+		"cs": "ecs check src tests --ansi",
+		"cs-fix": "ecs check src tests --fix --ansi",
+		"phpstan": "phpstan analyse --ansi"
+	},
+	"autoload": {
+		"psr-4": {
+			"ikvasnica\\PHPStan\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"classmap": [
+			"tests/"
+		]
+	},
+	"config": {
+		"platform": {
+			"php": "7.3.9"
+		},
+		"preferred-install": "dist",
+		"sort-packages": true
+	},
+	"extra": {
+		"phpstan": {
+			"includes": [
+				"rules.neon"
+			]
+		}
+	},
+	"support": {
+		"issues": "https://github.com/ikvasnica/phpstan-clean-test/issues",
+		"source": "https://github.com/ikvasnica/phpstan-clean-test"
+	}
+}
