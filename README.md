@@ -15,7 +15,7 @@ $ composer require --dev ikvasnica/phpstan-clean-test
 
 ## Usage
 
-All of the [rules](https://github.com/ikvasnica/phpstan-clean-test#rules) providedby this library are included in [`rules.neon`](rules.neon).
+All of the [rules](https://github.com/ikvasnica/phpstan-clean-test#rules) provided by this library are included in [`rules.neon`](rules.neon).
 
 When you are using [`phpstan/extension-installer`](https://github.com/phpstan/extension-installer), `rules.neon` will be automatically included.
 
@@ -44,9 +44,13 @@ This package provides the following rules for use with [`phpstan/phpstan`](https
 
 #### `UnitExtendsFromTestCaseRule`
 
-**What it does:** This rule forces you to extend only from allowed classes in unit tests (default: `PHPUnit\Framework\TestCase`).
+**What it does:** 
 
-**Why it is useful:** It prevents developers i.e. from using a dependency injection container in unit tests (`$this->getContainer()`) and other tools from integration/functional tests.
+This rule forces you to extend only from allowed classes in unit tests (default: `PHPUnit\Framework\TestCase`).
+
+**Why it is useful:** 
+
+It prevents developers i.e. from using a dependency injection container in unit tests (`$this->getContainer()`) and other tools from integration/functional tests.
 
 ##### Defaults
 
@@ -65,6 +69,7 @@ If you want to allow additional classes to be extended, you can set the `classes
 parameters:
     ikvasnica:
         classesAllowedToBeExtendedInTests:
+	    - PHPUnit\Framework\TestCase
             - MyNamespace\AbstractTest
 ```
 
