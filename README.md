@@ -40,19 +40,17 @@ This package provides the following rules for use with [`phpstan/phpstan`](https
 
 * [`ikvasnica\PHPStan\Rules\UnitExtendsFromTestCaseRule`](#unitextendsfromtestcaserule)
 
-### Classes
+### `UnitExtendsFromTestCaseRule`
 
-#### `UnitExtendsFromTestCaseRule`
-
-**What it does:** 
+**What it does:**
 
 This rule forces you to extend only from allowed classes in unit tests (default: `PHPUnit\Framework\TestCase`).
 
-**Why it is useful:** 
+**Why it is useful:**
 
 It prevents developers i.e. from using a dependency injection container in unit tests (`$this->getContainer()`) and other tools from integration/functional tests.
 
-##### Defaults
+#### Defaults
 
 By default, this rule detects unit tests by checking the namespace (it must contain the string `Unit`) and the class name ending (it must end with the string `Test`).
 
@@ -61,7 +59,7 @@ The following classes are allowed to be extended:
 * [`PHPUnit\Framework\TestCase`](https://github.com/sebastianbergmann/phpunit/blob/7.5.2/src/Framework/TestCase.php)
 
 
-##### Allowing classes to be extended
+#### Allowing classes to be extended
 
 If you want to allow additional classes to be extended, you can set the `classesAllowedToBeExtendedInTests` parameter to a list of class names:
 
@@ -73,7 +71,7 @@ parameters:
             - MyNamespace\AbstractTest
 ```
 
-##### Detecting unit tests namespace
+#### Detecting unit tests namespace
 If you want to change the namespace string check described above, you can set your own string to be checked in the `unitTestNamespaceContainsString` parameter:
 
 ```neon
@@ -81,3 +79,8 @@ parameters:
     ikvasnica:
         unitTestNamespaceContainsString: CustomTestPath
 ```
+
+## TODO
+- [ ] Implement Dependabot.com
+- [ ] Add CI checks
+- [ ] Add code coverage checks
