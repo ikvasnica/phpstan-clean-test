@@ -1,6 +1,6 @@
 name: Pull-request checks
 
-on: 
+on:
   pull_request:
     branches:
       - master
@@ -18,14 +18,11 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@1.8.0
       with:
-        php-version: 7.3.9 
+        php-version: 7.3.9
         coverage: none
 
     - name: Validate composer.json and composer.lock
       run: composer validate
-
-    - name: Normalize Composer
-      uses: ergebnis/composer-normalize-action@0.7.0
 
     - name: Load Composer dependencies from cache
       id: composer-cache

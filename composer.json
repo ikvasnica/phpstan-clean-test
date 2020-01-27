@@ -29,11 +29,17 @@
         "phpunit/phpunit": "^8.5",
         "symplify/easy-coding-standard": "^7.0"
     },
+	"suggest": {
+		"phpstan/phpstan-deprecation-rules": "Rules for disallowing deprecation code.",
+		"phpstan/phpstan-strict-rules": "Strict and opinionated PHPStan rules.",
+		"phpstan/phpstan-phpunit": "PHPStan extension and rules to integrate with PHPUnit testing framework.",
+		"ergebnis/phpstan-rules": "Even more PHPStan strict and opinionated rules."
+	},
 	"scripts": {
 		"check-all": [
 			"@cs",
 			"@phpstan",
-			"phpunit --do-not-cache-result"
+			"phpunit"
 		],
 		"cs": "ecs check src tests --ansi",
 		"cs-fix": "ecs check src tests --fix --ansi",

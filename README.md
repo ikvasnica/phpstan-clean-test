@@ -82,5 +82,4 @@ parameters:
 
 ## TODO
 - [ ] Implement Dependabot.com
-- [ ] Add CI checks
 - [ ] Add code coverage checks
