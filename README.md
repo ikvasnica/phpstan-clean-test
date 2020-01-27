@@ -1,5 +1,7 @@
 # PHPStan Clean Test rules
 
+![Continuous Integration](https://github.com/ikvasnica/phpstan-clean-test/workflows/continuous-integration/badge.svg?event=push)
+
 - [PHPStan](https://github.com/phpstan/phpstan)
 - [PHPStan-PHPUnit extension](https://github.com/phpstan/phpstan-phpunit)
 
@@ -82,5 +84,4 @@ parameters:
 
 ## TODO
 - [ ] Implement Dependabot.com
-- [ ] Add CI checks
 - [ ] Add code coverage checks

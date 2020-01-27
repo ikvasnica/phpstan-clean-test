@@ -1,14 +1,13 @@
-name: Pull-request checks
+name: continuous-integration
 
-on: 
+on:
   pull_request:
+  push:
     branches:
       - master
-    paths-ignore:
-      - 'README.md'
 
 jobs:
-  build:
+  pr-tests:
 
     runs-on: ubuntu-latest
 
@@ -18,14 +17,11 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@1.8.0
       with:
-        php-version: 7.3.9 
+        php-version: 7.3.9
         coverage: none
 
     - name: Validate composer.json and composer.lock
       run: composer validate
-
-    - name: Normalize Composer
-      uses: ergebnis/composer-normalize-action@0.7.0
 
     - name: Load Composer dependencies from cache
       id: composer-cache
