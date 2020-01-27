@@ -1,14 +1,13 @@
-name: Pull-request checks
+name: continuous-integration
 
 on:
   pull_request:
+  push:
     branches:
       - master
-    paths-ignore:
-      - 'README.md'
 
 jobs:
-  build:
+  pr-tests:
 
     runs-on: ubuntu-latest
 
