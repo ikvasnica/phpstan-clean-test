@@ -23,18 +23,11 @@ When you are using [`phpstan/extension-installer`](https://github.com/phpstan/ex
 
 Otherwise you need to include `rules.neon` in your `phpstan.neon`:
 
-```neon
+```yaml
+# phpstan.neon
 includes:
 	- vendor/ikvasnica/phpstan-clean-test/rules.neon
 ```
-
-:bulb: You probably want to use these rules on top of the rules provided by:
-
-* [`phpstan/phpstan`](https://github.com/phpstan/phpstan)
-* [`phpstan/phpstan-deprecation-rules`](https://github.com/phpstan/phpstan-deprecation-rules)
-* [`phpstan/phpstan-strict-rules`](https://github.com/phpstan/phpstan-strict-rules)
-* [`ergebnis/phpstan-rules`](https://github.com/ergebnis/phpstan-rules)
-* [`phpstan/phpstan-phpunit`](https://github.com/phpstan/phpstan-phpunit)
 
 ## Rules
 
@@ -48,6 +41,15 @@ This package provides the following rules for use with [`phpstan/phpstan`](https
 This rule forces you to extend only from allowed classes in unit tests (default: `PHPUnit\Framework\TestCase`).
 It prevents developers i.e. from using a dependency injection container in unit tests (`$this->getContainer()`) and other tools from integration/functional tests.
 
+:x:
+
+```php
+namespace ExampleTestCase\Unit;
+
+class UnitExtendsInvalidTest extends \Dummy\FunctionalDummyTest {}
+```
+<br />
+
 :white_check_mark:
 
 ```php
@@ -56,27 +58,18 @@ namespace ExampleTestCase\Unit;
 class UnitExtendsUnitTest extends \PHPUnit\Framework\TestCase {}
 ```
 
-:x:
-
-```php
-namespace ExampleTestCase\Unit;
-
-class UnitExtendsInvalidTest extends \Dummy\FunctionalDummyTest {}
-```
 #### Defaults
 
-By default, this rule detects unit tests by checking the namespace (it must contain the string `Unit`) and the class name ending (it must end with the string `Test`).
+- By default, this rule detects unit tests by checking the namespace (it must contain the string `Unit`) and the class name ending (it must end with the string `Test`).
 
-The following classes are allowed to be extended:
-
-* [`PHPUnit\Framework\TestCase`](https://github.com/sebastianbergmann/phpunit/blob/7.5.2/src/Framework/TestCase.php)
+- The following class is allowed to be extended: `PHPUnit\Framework\TestCase`
 
 
 #### Allowing classes to be extended
 
 If you want to allow additional classes to be extended, you can set the `classesAllowedToBeExtendedInTests` parameter to a list of class names:
 
-```neon
+```yaml
 parameters:
     ikvasnica:
         classesAllowedToBeExtendedInTests:
@@ -87,7 +80,7 @@ parameters:
 #### Detecting unit tests namespace
 If you want to change the namespace string check described above, you can set your own string to be checked in the `unitTestNamespaceContainsString` parameter:
 
-```neon
+```yaml
 parameters:
     ikvasnica:
         unitTestNamespaceContainsString: CustomTestPath
@@ -96,20 +89,6 @@ parameters:
 ### `DisallowSetupAndConstructorRule`
 
 Neither of methods `__construct` nor `setUp` can be declared in a unit test. You can set the unit tests namespace by using the same configuration like in [`UnitExtendsFromTestCaseRule`](#unitextendsfromtestcaserule).
-
-:white_check_mark:
-
-```php
-namespace ExampleTestCase\Unit;
-
-class DisallowSetupConstructOkTest extends \PHPUnit\Framework\TestCase
-{
-    public function testSomeThing(): void
-    {
-        $this->assertTrue(true);
-    }
-}
-```
 
 :x:
 
@@ -138,6 +117,20 @@ class DisallowSetupConstructInvaliTest extends \PHPUnit\Framework\TestCase
     }
 ```
 
+<br />
+:white_check_mark:
+
+```php
+namespace ExampleTestCase\Unit;
+
+class DisallowSetupConstructOkTest extends \PHPUnit\Framework\TestCase
+{
+    public function testSomeThing(): void
+    {
+        $this->assertTrue(true);
+    }
+}
+```
 ## TODO
 - [ ] Implement Dependabot.com
 - [ ] Add code coverage checks
