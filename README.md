@@ -26,7 +26,7 @@ Otherwise you need to include `rules.neon` in your `phpstan.neon`:
 ```yaml
 # phpstan.neon
 includes:
-	- vendor/ikvasnica/phpstan-clean-test/rules.neon
+    - vendor/ikvasnica/phpstan-clean-test/rules.neon
 ```
 
 ## Rules
@@ -73,7 +73,7 @@ If you want to allow additional classes to be extended, you can set the `classes
 parameters:
     ikvasnica:
         classesAllowedToBeExtendedInTests:
-	    - PHPUnit\Framework\TestCase
+            - PHPUnit\Framework\TestCase
             - MyNamespace\AbstractTest
 ```
 
