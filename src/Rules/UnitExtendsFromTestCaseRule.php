@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ikvasnica\PHPStan\Rules;
 
-use Nette\Utils\Strings;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
@@ -15,9 +14,6 @@ use function sprintf;
  */
 final class UnitExtendsFromTestCaseRule implements Rule
 {
-    /** @var string */
-    private const TEST_CLASS_ENDING_STRING = 'Test';
-
     /** @var array<int, class-string> */
     private $classesAllowedToBeExtendedInTests;
 
@@ -47,7 +43,7 @@ final class UnitExtendsFromTestCaseRule implements Rule
         $node = $node;
 
         $extendedClass = $node->extends;
-        if ($extendedClass === null || $scope->getNamespace() === null || ! $this->isUnitTest($scope->getNamespace(), (string) $node->name)) {
+        if ($extendedClass === null || ! UnitTestRuleHelper::isUnitTest((string) $scope->getNamespace(), (string) $node->name, $this->unitTestNamespaceContainsString)) {
             return [];
         }
 
@@ -61,11 +57,5 @@ final class UnitExtendsFromTestCaseRule implements Rule
         }
 
         return [];
-    }
-
-    private function isUnitTest(string $namespace, string $nodeName): bool
-    {
-        return Strings::contains($namespace, $this->unitTestNamespaceContainsString)
-            && Strings::endsWith($nodeName, self::TEST_CLASS_ENDING_STRING);
     }
 }

@@ -18,3 +18,10 @@ services:
 			unitTestNamespaceContainsString: %ikvasnica.unitTestNamespaceContainsString%
 		tags:
 			- phpstan.rules.rule
+
+	-
+		class: ikvasnica\PHPStan\Rules\DisallowSetupConstructRule
+		arguments:
+			unitTestNamespaceContainsString: %ikvasnica.unitTestNamespaceContainsString%
+		tags:
+			- phpstan.rules.rule
