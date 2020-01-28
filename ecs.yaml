@@ -1,11 +1,16 @@
 parameters:
+  paths:
+    - 'src'
+    - 'tests'
+  exclude_files:
+    - 'tests/*/data/*'
   sets:
-      - common
-      - dead-code
-      - php71
-      - types
-      - psr12
-      - clean-code
+    - common
+    - dead-code
+    - php71
+    - types
+    - psr12
+    - clean-code
 
 services:
   Symplify\CodingStandard\Sniffs\CleanCode\CognitiveComplexitySniff:
