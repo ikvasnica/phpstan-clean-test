@@ -44,6 +44,7 @@ It prevents developers i.e. from using a dependency injection container in unit 
 :x:
 
 ```php
+// tests/ExampleTestCase/Unit/UnitExtendsInvalidTest.php
 namespace ExampleTestCase\Unit;
 
 class UnitExtendsInvalidTest extends \Dummy\FunctionalDummyTest {}
@@ -53,6 +54,7 @@ class UnitExtendsInvalidTest extends \Dummy\FunctionalDummyTest {}
 :white_check_mark:
 
 ```php
+// tests/ExampleTestCase/Unit/UnitExtendsUnitTest.php
 namespace ExampleTestCase\Unit;
 
 class UnitExtendsUnitTest extends \PHPUnit\Framework\TestCase {}
@@ -70,6 +72,7 @@ class UnitExtendsUnitTest extends \PHPUnit\Framework\TestCase {}
 If you want to allow additional classes to be extended, you can set the `classesAllowedToBeExtendedInTests` parameter to a list of class names:
 
 ```yaml
+# phpstan.neon
 parameters:
     ikvasnica:
         classesAllowedToBeExtendedInTests:
@@ -81,6 +84,7 @@ parameters:
 If you want to change the namespace string check described above, you can set your own string to be checked in the `unitTestNamespaceContainsString` parameter:
 
 ```yaml
+# phpstan.neon
 parameters:
     ikvasnica:
         unitTestNamespaceContainsString: CustomTestPath
@@ -93,6 +97,7 @@ Neither of methods `__construct` nor `setUp` can be declared in a unit test. You
 :x:
 
 ```php
+// tests/ExampleTestCase/Unit/DisallowSetupConstructInvaliTest.php
 namespace ExampleTestCase\Unit;
 
 class DisallowSetupConstructInvaliTest extends \PHPUnit\Framework\TestCase
@@ -121,6 +126,7 @@ class DisallowSetupConstructInvaliTest extends \PHPUnit\Framework\TestCase
 :white_check_mark:
 
 ```php
+// tests/ExampleTestCase/Unit/DisallowSetupConstructOkTest.php
 namespace ExampleTestCase\Unit;
 
 class DisallowSetupConstructOkTest extends \PHPUnit\Framework\TestCase
