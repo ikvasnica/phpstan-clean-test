@@ -19,11 +19,11 @@ final class DisallowSetupAndConstructorRule implements Rule
     private const DISALLOWED_METHODS = ['__construct', 'setUp'];
 
     /** @var string */
-    private $unitTestNamespaceContainsString;
+    private $unitTestNamespace;
 
-    public function __construct(string $unitTestNamespaceContainsString)
+    public function __construct(string $unitTestNamespace)
     {
-        $this->unitTestNamespaceContainsString = $unitTestNamespaceContainsString;
+        $this->unitTestNamespace = $unitTestNamespace;
     }
 
     public function getNodeType(): string
@@ -40,7 +40,7 @@ final class DisallowSetupAndConstructorRule implements Rule
         $node = $node;
 
         $classReflection = $scope->getClassReflection();
-        if ($classReflection === null || ! UnitTestRuleHelper::isUnitTest((string) $scope->getNamespace(), $classReflection->getName(), $this->unitTestNamespaceContainsString)) {
+        if ($classReflection === null || ! UnitTestRuleHelper::isUnitTest((string) $scope->getNamespace(), $classReflection->getName(), $this->unitTestNamespace)) {
             return [];
         }
 

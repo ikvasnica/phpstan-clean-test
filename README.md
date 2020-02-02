@@ -1,12 +1,13 @@
 # PHPStan Clean Test rules
 
 ![Continuous Integration](https://github.com/ikvasnica/phpstan-clean-test/workflows/continuous-integration/badge.svg?event=push)
-[![Coverage Status](https://coveralls.io/repos/github/ikvasnica/phpstan-clean-test/badge.svg?branch=master)](https://coveralls.io/repos/github/ikvasnica/phpstan-clean-test/badge.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ikvasnica/phpstan-clean-test/badge.svg?branch=master)](https://coveralls.io/github/ikvasnica/phpstan-clean-test?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/aa40e911787049d3bc9f987ec1809f5b)](https://www.codacy.com/manual/ikvasnica/phpstan-clean-test?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ikvasnica/phpstan-clean-test&amp;utm_campaign=Badge_Grade)
 [![Latest Stable Version](https://poser.pugx.org/ikvasnica/phpstan-clean-test/version)](https://packagist.org/packages/ikvasnica/phpstan-clean-test)
 [![License](https://poser.pugx.org/ikvasnica/phpstan-clean-test/license)](https://packagist.org/packages/ikvasnica/phpstan-clean-test)
 
-- [PHPStan](https://github.com/phpstan/phpstan)
-- [PHPStan-PHPUnit extension](https://github.com/phpstan/phpstan-phpunit)
+-   [PHPStan](https://github.com/phpstan/phpstan)
+-   [PHPStan-PHPUnit extension](https://github.com/phpstan/phpstan-phpunit)
 
 This extension provides highly opinionated and strict rules for test cases for the PHPStan static analysis tool.
 
@@ -14,7 +15,7 @@ This extension provides highly opinionated and strict rules for test cases for t
 
 Run
 
-```
+```shell
 $ composer require --dev ikvasnica/phpstan-clean-test
 ```
 
@@ -35,9 +36,8 @@ includes:
 ## Rules
 
 This package provides the following rules for use with [`phpstan/phpstan`](https://github.com/phpstan/phpstan):
-
-* [`ikvasnica\PHPStan\Rules\UnitExtendsFromTestCaseRule`](#unitextendsfromtestcaserule)
-* [`ikvasnica\PHPStan\Rules\DisallowSetupAndConstructorRule`](#disallowsetupandconstructorrule)
+-   [`ikvasnica\PHPStan\Rules\UnitExtendsFromTestCaseRule`](#unitextendsfromtestcaserule)
+-   [`ikvasnica\PHPStan\Rules\DisallowSetupAndConstructorRule`](#disallowsetupandconstructorrule)
 
 ### `UnitExtendsFromTestCaseRule`
 
@@ -68,10 +68,8 @@ final class UnitExtendsUnitTest extends \PHPUnit\Framework\TestCase {}
 
 #### Defaults
 
-- By default, this rule detects unit tests by checking the namespace (it must contain the string `Unit`) and the class name ending (it must end with the string `Test`).
-
-- The following class is allowed to be extended: `PHPUnit\Framework\TestCase`
-
+-   By default, this rule detects unit tests by checking the namespace (it must contain the string `Unit`) and the class name ending (it must end with the string `Test`).
+-   The following class is allowed to be extended: `PHPUnit\Framework\TestCase`
 
 #### Allowing classes to be extended
 
@@ -129,6 +127,7 @@ final class DisallowSetupConstructInvaliTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertTrue($this->something);
     }
+}
 ```
 
 <br />
@@ -146,6 +145,3 @@ final class DisallowSetupConstructOkTest extends \PHPUnit\Framework\TestCase
     }
 }
 ```
-## TODO
-- [ ] Implement Dependabot.com
-- [ ] Add code quality tool (e.g. codacy.com)
