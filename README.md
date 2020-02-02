@@ -39,7 +39,10 @@ This package provides the following rules for use with [`phpstan/phpstan`](https
 ### `UnitExtendsFromTestCaseRule`
 
 This rule forces you to extend only from allowed classes in unit tests (default: `PHPUnit\Framework\TestCase`).
-It prevents developers i.e. from using a dependency injection container in unit tests (`$this->getContainer()`) and other tools from integration/functional tests.
+
+**Why:**
+1. It prevents developers i.e. from using a dependency injection container in unit tests (`$this->getContainer()`) and other tools from integration/functional tests.
+2. You should extend only from a class when a child class satisfies the "is a" relationship. That said, if you need only a subset of a parent's functionality, you should use composition over inheritance (i.e. by traits or helpers).
 
 :x:
 
@@ -47,7 +50,7 @@ It prevents developers i.e. from using a dependency injection container in unit 
 // tests/ExampleTestCase/Unit/UnitExtendsInvalidTest.php
 namespace ExampleTestCase\Unit;
 
-class UnitExtendsInvalidTest extends \Dummy\FunctionalDummyTest {}
+final class UnitExtendsInvalidTest extends \Dummy\FunctionalDummyTest {}
 ```
 <br />
 
@@ -57,7 +60,7 @@ class UnitExtendsInvalidTest extends \Dummy\FunctionalDummyTest {}
 // tests/ExampleTestCase/Unit/UnitExtendsUnitTest.php
 namespace ExampleTestCase\Unit;
 
-class UnitExtendsUnitTest extends \PHPUnit\Framework\TestCase {}
+final class UnitExtendsUnitTest extends \PHPUnit\Framework\TestCase {}
 ```
 
 #### Defaults
@@ -94,13 +97,16 @@ parameters:
 
 Neither of methods `__construct` nor `setUp` can be declared in a unit test. You can set the unit tests namespace by using the same configuration like in [`UnitExtendsFromTestCaseRule`](#unitextendsfromtestcaserule).
 
+**Why:**
+Each test scenario should create its dependencies on its own. Method `setUp` is useful for setting up i.e. database transaction in a functional test. In a unit test, you should put all the preparation into a testing method or a data provider itself. It increases readability and clearly shows the code intention.
+
 :x:
 
 ```php
 // tests/ExampleTestCase/Unit/DisallowSetupConstructInvaliTest.php
 namespace ExampleTestCase\Unit;
 
-class DisallowSetupConstructInvaliTest extends \PHPUnit\Framework\TestCase
+final class DisallowSetupConstructInvaliTest extends \PHPUnit\Framework\TestCase
 {
     private $something;
 
@@ -129,7 +135,7 @@ class DisallowSetupConstructInvaliTest extends \PHPUnit\Framework\TestCase
 // tests/ExampleTestCase/Unit/DisallowSetupConstructOkTest.php
 namespace ExampleTestCase\Unit;
 
-class DisallowSetupConstructOkTest extends \PHPUnit\Framework\TestCase
+final class DisallowSetupConstructOkTest extends \PHPUnit\Framework\TestCase
 {
     public function testSomeThing(): void
     {
