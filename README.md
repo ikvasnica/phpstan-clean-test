@@ -1,6 +1,9 @@
 # PHPStan Clean Test rules
 
 ![Continuous Integration](https://github.com/ikvasnica/phpstan-clean-test/workflows/continuous-integration/badge.svg?event=push)
+[![Coverage Status](https://coveralls.io/repos/github/ikvasnica/phpstan-clean-test/badge.svg?branch=master)](https://coveralls.io/repos/github/ikvasnica/phpstan-clean-test/badge.svg?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/ikvasnica/phpstan-clean-test/version)](https://packagist.org/packages/ikvasnica/phpstan-clean-test)
+[![License](https://poser.pugx.org/ikvasnica/phpstan-clean-test/license)](https://packagist.org/packages/ikvasnica/phpstan-clean-test)
 
 - [PHPStan](https://github.com/phpstan/phpstan)
 - [PHPStan-PHPUnit extension](https://github.com/phpstan/phpstan-phpunit)
@@ -145,4 +148,4 @@ final class DisallowSetupConstructOkTest extends \PHPUnit\Framework\TestCase
 ```
 ## TODO
 - [ ] Implement Dependabot.com
-- [ ] Add code coverage checks
+- [ ] Add code quality tool (e.g. codacy.com)
