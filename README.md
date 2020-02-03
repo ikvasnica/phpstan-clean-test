@@ -38,6 +38,7 @@ includes:
 This package provides the following rules for use with [`phpstan/phpstan`](https://github.com/phpstan/phpstan):
 -   [`ikvasnica\PHPStan\Rules\UnitExtendsFromTestCaseRule`](#unitextendsfromtestcaserule)
 -   [`ikvasnica\PHPStan\Rules\DisallowSetupAndConstructorRule`](#disallowsetupandconstructorrule)
+-   [`ikvasnica\PHPStan\Rules\AssertSameOverAssertEqualsRule`](#assertsameoverassertequalsrule)
 
 ### `UnitExtendsFromTestCaseRule`
 
@@ -151,4 +152,38 @@ final class DisallowSetupConstructOkTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(true);
     }
 }
+```
+
+### `AssertSameOverAssertEqualsRule`
+Calling `assertEquals` in tests is forbidden in favor of `assertSame`.
+
+**Why:**
+When using `assertEquals`, data types are not considered. On the other hand, `assertSame` checks whether two variables are of the same type and references the same object. Therefore, `assertEquals` can be valid when comparing objects or arrays, but not scalar values.
+
+Using `assertEquals` with scalar values might lead to an unexpected behaviour (e.g. `assertEquals(null, '')` evaluates to `true`, whereas `assertSame(null, '')` evaluates to `false`).
+
+:x:
+
+```php
+// tests/ExampleTestCase/Unit/InvalidAssertEqualsUses.php
+$booleanValue = false;
+$exception = new Exception('A bad thing has happened.');
+
+$this->assertEquals(true, $booleanValue);
+$this->assertEquals('exception message', (string) $exception);
+```
+
+<br />
+:white_check_mark:
+
+```php
+// tests/ExampleTestCase/Unit/ValidAsserts.php
+$booleanValue = false;
+$exception = new Exception('A bad thing has happened.');
+$emptyArray = [];
+
+$this->assertTrue($booleanValue);
+$this->assertSame('exception message', (string) $exception);
+
+$this->assertEquals([], $emptyArray);
 ```

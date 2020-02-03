@@ -12,6 +12,9 @@ parametersSchema:
 		allowSetupInUnitTests: bool(),
 	])
 
+rules:
+	- ikvasnica\PHPStan\Rules\AssertSameOverAssertEqualsRule
+
 services:
 	-
 		class: ikvasnica\PHPStan\Rules\UnitExtendsFromTestCaseRule
