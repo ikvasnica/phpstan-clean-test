@@ -9,7 +9,7 @@ use PHPStan\Testing\RuleTestCase;
 /**
  * @extends \PHPStan\Testing\RuleTestCase<DisallowSetupAndConstructorRule>
  */
-final class DisallowSetupAndConstructorRuleTest extends RuleTestCase
+final class DisallowOnlyConstructorRuleTest extends RuleTestCase
 {
     public function testRule(): void
     {
@@ -20,15 +20,11 @@ final class DisallowSetupAndConstructorRuleTest extends RuleTestCase
                 'Declaring the method "__construct" in unit tests is forbidden.',
                 11,
             ],
-            [
-                'Declaring the method "setUp" in unit tests is forbidden.',
-                16,
-            ],
         ]);
     }
 
     protected function getRule(): \PHPStan\Rules\Rule
     {
-        return new DisallowSetupAndConstructorRule('Unit', false);
+        return new DisallowSetupAndConstructorRule('Unit', true);
     }
 }

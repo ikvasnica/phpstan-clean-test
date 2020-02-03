@@ -1,3 +1,6 @@
+includes:
+	- rules.neon
+
 parameters:
 	paths:
 		- src
@@ -5,6 +8,11 @@ parameters:
 	level: max
 	excludes_analyse:
 		- %currentWorkingDirectory%/tests/*/data/*
+	ikvasnica:
+		classesAllowedToBeExtendedInTests:
+			- PHPStan\Testing\RuleTestCase
+		unitTestNamespaceContainsString: Rules
+
 	ergebnis:
 		classesAllowedToBeExtended:
 			- PHPStan\Testing\RuleTestCase
