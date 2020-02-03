@@ -15,15 +15,22 @@ use function sprintf;
  */
 final class DisallowSetupAndConstructorRule implements Rule
 {
+    /** @var string */
+    private const SETUP_METHOD_NAME = 'setUp';
+
     /** @var array<string> */
-    private const DISALLOWED_METHODS = ['__construct', 'setUp'];
+    private const DISALLOWED_METHODS = ['__construct', self::SETUP_METHOD_NAME];
 
     /** @var string */
-    private $unitTestNamespace;
+    private $unitTestNamespaceContainsString;
 
-    public function __construct(string $unitTestNamespace)
+    /** @var bool */
+    private $allowSetupInUnitTests;
+
+    public function __construct(string $unitTestNamespaceContainsString, bool $allowSetupInUnitTests)
     {
-        $this->unitTestNamespace = $unitTestNamespace;
+        $this->unitTestNamespaceContainsString = $unitTestNamespaceContainsString;
+        $this->allowSetupInUnitTests = $allowSetupInUnitTests;
     }
 
     public function getNodeType(): string
@@ -40,12 +47,12 @@ final class DisallowSetupAndConstructorRule implements Rule
         $node = $node;
 
         $classReflection = $scope->getClassReflection();
-        if ($classReflection === null || ! UnitTestRuleHelper::isUnitTest((string) $scope->getNamespace(), $classReflection->getName(), $this->unitTestNamespace)) {
+        if ($classReflection === null || ! UnitTestRuleHelper::isUnitTest((string) $scope->getNamespace(), $classReflection->getName(), $this->unitTestNamespaceContainsString)) {
             return [];
         }
 
         $methodName = $node->name->name;
-        if (in_array($methodName, self::DISALLOWED_METHODS, true)) {
+        if ($this->isMethodForbidden($methodName)) {
             return [
                 sprintf(
                     'Declaring the method "%s" in unit tests is forbidden.',
@@ -55,5 +62,14 @@ final class DisallowSetupAndConstructorRule implements Rule
         }
 
         return [];
+    }
+
+    private function isMethodForbidden(string $methodName): bool
+    {
+        if ($this->allowSetupInUnitTests && $methodName === self::SETUP_METHOD_NAME) {
+            return false;
+        }
+
+        return in_array($methodName, self::DISALLOWED_METHODS, true);
     }
 }

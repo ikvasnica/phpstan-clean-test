@@ -3,11 +3,13 @@ parameters:
 		classesAllowedToBeExtendedInTests:
 			- PHPUnit\Framework\TestCase
 		unitTestNamespaceContainsString: Unit
+		allowSetupInUnitTests: false
 
 parametersSchema:
 	ikvasnica: structure([
 		classesAllowedToBeExtendedInTests: listOf(string()),
-		unitTestNamespaceContainsString: string()
+		unitTestNamespaceContainsString: string(),
+		allowSetupInUnitTests: bool(),
 	])
 
 services:
@@ -20,8 +22,9 @@ services:
 			- phpstan.rules.rule
 
 	-
-		class: ikvasnica\PHPStan\Rules\DisallowSetupConstructRule
+		class: ikvasnica\PHPStan\Rules\DisallowSetupAndConstructorRule
 		arguments:
 			unitTestNamespaceContainsString: %ikvasnica.unitTestNamespaceContainsString%
+			allowSetupInUnitTests: %ikvasnica.allowSetupInUnitTests%
 		tags:
 			- phpstan.rules.rule

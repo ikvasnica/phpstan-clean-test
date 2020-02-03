@@ -73,33 +73,40 @@ final class UnitExtendsUnitTest extends \PHPUnit\Framework\TestCase {}
 
 #### Allowing classes to be extended
 
-If you want to allow additional classes to be extended, you can set the `classesAllowedToBeExtendedInTests` parameter to a list of class names:
+If you want to allow additional classes to be extended, you can add it to the `classesAllowedToBeExtendedInTests` parameter to a list of class names.
+
+#### Detecting unit tests namespace
+If you want to change the namespace string check described above, you can set your own string to be checked in the `unitTestNamespaceContainsString` parameter.
 
 ```yaml
 # phpstan.neon
 parameters:
     ikvasnica:
         classesAllowedToBeExtendedInTests:
-            - PHPUnit\Framework\TestCase
-            - MyNamespace\AbstractTest
+          - MyNamespace\AbstractTest
+        unitTestNamespaceContainsString: CustomTestPath
 ```
 
+### `DisallowSetupAndConstructorRule`
+
+Neither of methods `__construct` nor `setUp` can be declared in a unit test.
+
+**Why:**
+Each test scenario should create its dependencies on its own. Method `setUp` is useful for setting up i.e. database transaction in a functional test. In a unit test, you should put all the preparation into a testing method or a data provider itself. It increases readability and clearly shows the code intention.
+
 #### Detecting unit tests namespace
-If you want to change the namespace string check described above, you can set your own string to be checked in the `unitTestNamespaceContainsString` parameter:
+If you want to change the namespace string check described above, you can set your own string to be checked in the `unitTestNamespaceContainsString` parameter.
+
+#### Allowing setUp() method
+If you really want to use the setUp() method, you can whitelist it by setting the parameter `allowSetupInUnitTests` to `true`.
 
 ```yaml
 # phpstan.neon
 parameters:
     ikvasnica:
         unitTestNamespaceContainsString: CustomTestPath
+        allowSetupInUnitTests: true
 ```
-
-### `DisallowSetupAndConstructorRule`
-
-Neither of methods `__construct` nor `setUp` can be declared in a unit test. You can set the unit tests namespace by using the same configuration like in [`UnitExtendsFromTestCaseRule`](#unitextendsfromtestcaserule).
-
-**Why:**
-Each test scenario should create its dependencies on its own. Method `setUp` is useful for setting up i.e. database transaction in a functional test. In a unit test, you should put all the preparation into a testing method or a data provider itself. It increases readability and clearly shows the code intention.
 
 :x:
 

@@ -18,15 +18,15 @@ final class UnitExtendsFromTestCaseRule implements Rule
     private $classesAllowedToBeExtendedInTests;
 
     /** @var string */
-    private $unitTestNamespace;
+    private $unitTestNamespaceContainsString;
 
     /**
      * @param array<int, class-string> $classesAllowedToBeExtendedInTests
      */
-    public function __construct(array $classesAllowedToBeExtendedInTests, string $unitTestNamespace)
+    public function __construct(array $classesAllowedToBeExtendedInTests, string $unitTestNamespaceContainsString)
     {
         $this->classesAllowedToBeExtendedInTests = $classesAllowedToBeExtendedInTests;
-        $this->unitTestNamespace = $unitTestNamespace;
+        $this->unitTestNamespaceContainsString = $unitTestNamespaceContainsString;
     }
 
     public function getNodeType(): string
@@ -43,7 +43,7 @@ final class UnitExtendsFromTestCaseRule implements Rule
         $node = $node;
 
         $extendedClass = $node->extends;
-        if ($extendedClass === null || ! UnitTestRuleHelper::isUnitTest((string) $scope->getNamespace(), (string) $node->name, $this->unitTestNamespace)) {
+        if ($extendedClass === null || ! UnitTestRuleHelper::isUnitTest((string) $scope->getNamespace(), (string) $node->name, $this->unitTestNamespaceContainsString)) {
             return [];
         }
 
