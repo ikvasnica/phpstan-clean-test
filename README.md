@@ -39,6 +39,7 @@ This package provides the following rules for use with [`phpstan/phpstan`](https
 -   [`ikvasnica\PHPStan\Rules\UnitExtendsFromTestCaseRule`](#unitextendsfromtestcaserule)
 -   [`ikvasnica\PHPStan\Rules\DisallowSetupAndConstructorRule`](#disallowsetupandconstructorrule)
 -   [`ikvasnica\PHPStan\Rules\AssertSameOverAssertEqualsRule`](#assertsameoverassertequalsrule)
+-   [`ikvasnica\PHPStan\Rules\StaticAssertOverThisAndStaticRule`](#staticassertoverthisandstaticrule)
 
 ### `UnitExtendsFromTestCaseRule`
 
@@ -186,4 +187,54 @@ $this->assertTrue($booleanValue);
 $this->assertSame('exception message', (string) $exception);
 
 $this->assertEquals([], $emptyArray);
+```
+
+### `StaticAssertOverThisAndStaticRule`
+Calling `$this->assert*`, `self::assert*` or `static::assert*` in tests is forbidden in favor of `PHPUnit\Framework\Assert::assert*`.
+
+**Why:**
+When you use PHPUnit, your test cases extend from `\PHPUnit\Framework\TestCase`. Assert methods are declared as static there, therefore it does not make sense to call them dynamically.
+Using `static::assert*` is discouraged, because it is a misuse of inheritance and assertion methods are more like a helper's methods.
+
+:x:
+
+```php
+// tests/ExampleTestCase/Unit/InvalidAssertUsage.php
+namespace ExampleTestCase;
+
+final class InvalidAssertUsageTest extends \PHPUnit\Framework\TestCase
+{
+    public function dummyTest(): void
+    {
+        // will fail
+        $this->assertSame(5, 5);
+        $this->assertTrue(false);
+        self::assertArrayHasKey(5, [5]);
+        static::assertCount(0, []);
+        \ExampleTestCase\StaticAssertOverThisAndStaticRule::assertTrue(true);
+        InvalidAssertUsageTest::assertTrue(true);
+    }
+}
+```
+
+<br />
+:white_check_mark:
+
+```php
+// tests/ExampleTestCase/Unit/ValidAssertsUsage.php
+namespace ExampleTestCase;
+
+use PHPUnit\Framework\Assert;
+
+final class ValidAssertUsageTest extends \PHPUnit\Framework\TestCase
+{
+    public function dummyTest(): void
+    {
+        // Assert::anything is OK
+        Assert::assertEquals(5, 5);
+        Assert::assertCount(1, [1, 2]);
+        Assert::assertTrue(false);
+        \PHPUnit\Framework\Assert::assertTrue(true);
+    }
+}
 ```

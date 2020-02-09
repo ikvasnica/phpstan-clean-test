@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ikvasnica\PHPStan\Rules;
 
+use ikvasnica\PHPStan\Rules\Helpers\UnitTestRuleHelper;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;

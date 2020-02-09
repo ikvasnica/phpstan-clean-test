@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace ikvasnica\PHPStan\Rules;
 
+use ikvasnica\PHPStan\Rules\Helpers\CallToAssertDetector;
 use PhpParser\Node;
 use PhpParser\NodeAbstract;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Type;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @implements \PHPStan\Rules\Rule<\PhpParser\NodeAbstract>
@@ -26,15 +26,14 @@ final class AssertSameOverAssertEqualsRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        if (! $node instanceof Node\Expr\MethodCall && ! $node instanceof Node\Expr\StaticCall) {
+        if (! CallToAssertDetector::isCallToAssert($node, $scope)) {
             return [];
         }
 
-        if ($scope->getClassReflection() === null || $scope->getClassReflection()->getAncestorWithClassName(TestCase::class) === null) {
-            return [];
-        }
+        /** @var Node\Expr\MethodCall|Node\Expr\StaticCall $node */
+        $node = $node;
 
-        if (count($node->args) < 2 || ! $node->name instanceof Node\Identifier || strtolower($node->name->toString()) !== 'assertequals') {
+        if (! $node->name instanceof Node\Identifier || count($node->args) < 2 || strtolower($node->name->toString()) !== 'assertequals') {
             return [];
         }
 
