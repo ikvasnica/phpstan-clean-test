@@ -9,6 +9,7 @@ use PhpParser\NodeAbstract;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Type;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @implements \PHPStan\Rules\Rule<\PhpParser\NodeAbstract>
@@ -26,6 +27,10 @@ final class AssertSameOverAssertEqualsRule implements Rule
     public function processNode(Node $node, Scope $scope): array
     {
         if (! $node instanceof Node\Expr\MethodCall && ! $node instanceof Node\Expr\StaticCall) {
+            return [];
+        }
+
+        if ($scope->getClassReflection() === null || $scope->getClassReflection()->getAncestorWithClassName(TestCase::class) === null) {
             return [];
         }
 

@@ -28,7 +28,10 @@ final class AssertSameOverAssertEqualsRuleTest extends RuleTestCase
             [self::ERROR_MESSAGE, 33],
             [self::ERROR_MESSAGE, 34],
             [self::ERROR_MESSAGE, 35],
+            [self::ERROR_MESSAGE, 36],
         ]);
+
+        $this->analyse([__DIR__ . '/data/assert-same-over-assert-equals-rule-not-a-test.php'], []);
     }
 
     protected function getRule(): \PHPStan\Rules\Rule

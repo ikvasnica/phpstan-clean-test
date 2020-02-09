@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace ExampleTestCase;
 
 use Exception;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Assert;
 
-final class AssertSameOverAssertEqualsRule extends TestCase
+final class AssertSameOverAssertEqualsRule extends DummyTestCase
 {
 	public function dummyTest(): void
 	{
@@ -24,6 +24,7 @@ final class AssertSameOverAssertEqualsRule extends TestCase
 		$this->assertEquals('', null);
 		$this->assertEquals(null, '');
 		static::assertEquals(null, '');
+		Assert::assertEquals(null, '');
 		$this->assertEquals(2, 3);
 		$this->assertEquals(2.2, 2.5);
 		static::assertEquals((int) '2', (int) '3');
@@ -38,5 +39,6 @@ final class AssertSameOverAssertEqualsRule extends TestCase
 		$this->assertEquals([], []);
 		$this->assertEquals(new Exception(), new Exception());
 		static::assertEquals(new Exception(), new Exception());
+		Assert::assertEquals(new Exception(), new Exception());
 	}
 }
