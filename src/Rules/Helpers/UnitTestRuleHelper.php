@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ikvasnica\PHPStan\Rules;
+namespace ikvasnica\PHPStan\Rules\Helpers;
 
 use Nette\Utils\Strings;
 
