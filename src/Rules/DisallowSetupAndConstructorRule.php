@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ikvasnica\PHPStan\Rules;
 
-use ikvasnica\PHPStan\Rules\Helpers\UnitTestRuleHelper;
+use ikvasnica\PHPStan\Rules\Helpers\TestClassDetector;
 use function in_array;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
@@ -48,7 +48,7 @@ final class DisallowSetupAndConstructorRule implements Rule
         $node = $node;
 
         $classReflection = $scope->getClassReflection();
-        if ($classReflection === null || ! UnitTestRuleHelper::isUnitTest((string) $scope->getNamespace(), $classReflection->getName(), $this->unitTestNamespaceContainsString)) {
+        if ($classReflection === null || ! TestClassDetector::isUnitTest((string) $scope->getNamespace(), $classReflection->getName(), $this->unitTestNamespaceContainsString)) {
             return [];
         }
 

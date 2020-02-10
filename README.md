@@ -40,6 +40,7 @@ This package provides the following rules for use with [`phpstan/phpstan`](https
 -   [`ikvasnica\PHPStan\Rules\DisallowSetupAndConstructorRule`](#disallowsetupandconstructorrule)
 -   [`ikvasnica\PHPStan\Rules\AssertSameOverAssertEqualsRule`](#assertsameoverassertequalsrule)
 -   [`ikvasnica\PHPStan\Rules\StaticAssertOverThisAndStaticRule`](#staticassertoverthisandstaticrule)
+-   [`ikvasnica\PHPStan\Rules\NoNullableArgumentRule`](#nonullableargumentrule)
 
 ### `UnitExtendsFromTestCaseRule`
 
@@ -243,6 +244,68 @@ final class ValidAssertUsageTest extends \PHPUnit\Framework\TestCase
         Assert::assertCount(1, [1, 2]);
         Assert::assertTrue(false);
         \PHPUnit\Framework\Assert::assertTrue(true);
+    }
+}
+```
+
+### `NoNullableArgumentRule`
+Nullable arguments and arguments with no type passed to test methods from data providers are forbidden.
+
+**Why:**
+A nullable argument from a data provider is a code smell. Usually it means that you test two different scenarios in one test.
+You should divide the test into two scenarios, i.e. one for testing valid data input and one for invalid data when an exception is expected to be thrown.
+
+:x:
+
+```php
+// tests/ExampleTestCase/Unit/NullableArgumentsInTest.php
+namespace ExampleTestCase;
+
+final class NullableArgumentsInTest extends \PHPUnit\Framework\TestCase
+{
+    public function testSomething($mixedTypeArgument, ?string $stringOrNullArgument): void
+    {
+        // will fail, because the first argument has no type and the second one is nullable
+    }
+
+    /**
+     * @test
+     * @param string|null $maybeString
+     */
+    public function someTestMethod(?string $maybeString): void
+    {
+        // will fail too, because this one is a test method due to the annotation
+    }
+}
+```
+
+<br />
+:white_check_mark:
+
+```php
+// tests/ExampleTestCase/Unit/ValidArgumentsInTest.php
+namespace ExampleTestCase;
+
+final class ValidArgumentsInTest extends \PHPUnit\Framework\TestCase
+{
+    public function testSomething(string $definitelyString): void
+    {
+        // this is a way to go!
+    }
+
+    public function testSomethingElse(): void
+    {
+        // no arguments are, of course, allowed
+    }
+
+    public function anotherPublicMethod(?bool $maybeTrueOrFalse): void
+    {
+        // although weird, you may have other non-test public methods with a nullable type as well
+    }
+
+    private function testHelperMethod(?string $maybeString): void
+    {
+        // private and protected methods are allowed to have nullable arguments
     }
 }
 ```

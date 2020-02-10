@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ikvasnica\PHPStan\Rules;
 
-use ikvasnica\PHPStan\Rules\Helpers\UnitTestRuleHelper;
+use ikvasnica\PHPStan\Rules\Helpers\TestClassDetector;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
@@ -44,7 +44,7 @@ final class UnitExtendsFromTestCaseRule implements Rule
         $node = $node;
 
         $extendedClass = $node->extends;
-        if ($extendedClass === null || ! UnitTestRuleHelper::isUnitTest((string) $scope->getNamespace(), (string) $node->name, $this->unitTestNamespaceContainsString)) {
+        if ($extendedClass === null || ! TestClassDetector::isUnitTest((string) $scope->getNamespace(), (string) $node->name, $this->unitTestNamespaceContainsString)) {
             return [];
         }
 

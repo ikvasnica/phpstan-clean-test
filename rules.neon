@@ -15,6 +15,7 @@ parametersSchema:
 rules:
 	- ikvasnica\PHPStan\Rules\AssertSameOverAssertEqualsRule
 	- ikvasnica\PHPStan\Rules\StaticAssertOverThisAndStaticRule
+	- ikvasnica\PHPStan\Rules\NoNullableArgumentRule
 
 services:
 	-
