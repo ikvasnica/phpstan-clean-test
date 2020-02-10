@@ -116,6 +116,8 @@ parameters:
 // tests/ExampleTestCase/Unit/DisallowSetupConstructInvaliTest.php
 namespace ExampleTestCase\Unit;
 
+use PHPUnit\Framework\Assert;
+
 final class DisallowSetupConstructInvaliTest extends \PHPUnit\Framework\TestCase
 {
     private $something;
@@ -134,7 +136,7 @@ final class DisallowSetupConstructInvaliTest extends \PHPUnit\Framework\TestCase
 
     public function testSomeThing(): void
     {
-        $this->assertTrue($this->something);
+        Assert::assertTrue($this->something);
     }
 }
 ```
@@ -146,11 +148,13 @@ final class DisallowSetupConstructInvaliTest extends \PHPUnit\Framework\TestCase
 // tests/ExampleTestCase/Unit/DisallowSetupConstructOkTest.php
 namespace ExampleTestCase\Unit;
 
+use PHPUnit\Framework\Assert;
+
 final class DisallowSetupConstructOkTest extends \PHPUnit\Framework\TestCase
 {
     public function testSomeThing(): void
     {
-        $this->assertTrue(true);
+        Assert::assertTrue(true);
     }
 }
 ```
@@ -167,11 +171,13 @@ Using `assertEquals` with scalar values might lead to an unexpected behaviour (e
 
 ```php
 // tests/ExampleTestCase/Unit/InvalidAssertEqualsUses.php
+use PHPUnit\Framework\Assert;
+
 $booleanValue = false;
 $exception = new Exception('A bad thing has happened.');
 
-$this->assertEquals(true, $booleanValue);
-$this->assertEquals('exception message', (string) $exception);
+Assert::assertEquals(true, $booleanValue);
+Assert::assertEquals('exception message', (string) $exception);
 ```
 
 <br />
@@ -179,14 +185,16 @@ $this->assertEquals('exception message', (string) $exception);
 
 ```php
 // tests/ExampleTestCase/Unit/ValidAsserts.php
+use PHPUnit\Framework\Assert;
+
 $booleanValue = false;
 $exception = new Exception('A bad thing has happened.');
 $emptyArray = [];
 
-$this->assertTrue($booleanValue);
-$this->assertSame('exception message', (string) $exception);
+Assert::assertTrue($booleanValue);
+Assert::assertSame('exception message', (string) $exception);
 
-$this->assertEquals([], $emptyArray);
+Assert::assertEquals([], $emptyArray);
 ```
 
 ### `StaticAssertOverThisAndStaticRule`
