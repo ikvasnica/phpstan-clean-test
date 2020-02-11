@@ -1,5 +1,7 @@
 includes:
 	- rules.neon
+	- vendor/phpstan/phpstan-strict-rules/rules.neon
+	- vendor/ergebnis/phpstan-rules/rules.neon
 
 parameters:
 	paths:

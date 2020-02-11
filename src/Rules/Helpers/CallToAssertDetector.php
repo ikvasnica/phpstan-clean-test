@@ -17,7 +17,7 @@ final class CallToAssertDetector
             return false;
         }
 
-        if ($scope->getClassReflection() === null || $scope->getClassReflection()->getAncestorWithClassName(TestCase::class) === null) {
+        if ($scope->getClassReflection() === null || ! in_array(TestCase::class, $scope->getClassReflection()->getParentClassesNames(), true)) {
             return false;
         }
 
