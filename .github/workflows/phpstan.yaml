@@ -1,0 +1,30 @@
+name: Static Analysis (PHPStan)
+
+on:
+  pull_request: null
+  push:
+    branches:
+      - master
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: shivammathur/setup-php@master
+      with:
+        php-version: 7.3
+        coverage: none
+    - name: Load dependencies from cache
+      id: composer-cache
+      run: |
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - uses: actions/cache@v1
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-php7.3-composer-${{ hashFiles('**/composer.json') }}
+        restore-keys: |
+          ${{ runner.os }}-php7.3-composer-
+
+    - run: composer install --prefer-dist --no-progress --no-suggest
+    - run: composer run-script phpstan

@@ -1,0 +1,48 @@
+name: Tests
+
+on:
+  pull_request: null
+  push:
+    branches:
+      - master
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ['7.2', '7.3', '7.4']
+
+    name: Tests on PHP ${{ matrix.php-versions }}
+    steps:
+    - uses: actions/checkout@master
+    - uses: shivammathur/setup-php@v1
+      with:
+        php-version: ${{ matrix.php-versions }}
+        coverage: none
+    - name: Load dependencies from cache
+      id: composer-cache
+      run: |
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - uses: actions/cache@v1
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-php${{ matrix.php-versions }}-composer-${{ hashFiles('**/composer.json') }}
+        restore-keys: |
+          ${{ runner.os }}-php${{ matrix.php-versions }}-composer-
+
+    - run: composer install --prefer-dist --no-progress --no-suggest
+    - run: php vendor/bin/phpunit
+
+  tests_lowest_dependencies:
+    runs-on: ubuntu-latest
+    name: Tests with lowest dependencies
+    steps:
+      - uses: actions/checkout@master
+      - uses: shivammathur/setup-php@v1
+        with:
+          php-version: 7.1
+          coverage: none
+      - run: composer update --prefer-lowest --no-progress --no-suggest
+      - run: php vendor/bin/phpunit
+
