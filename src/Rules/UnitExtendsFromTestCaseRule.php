@@ -15,14 +15,14 @@ use function sprintf;
  */
 final class UnitExtendsFromTestCaseRule implements Rule
 {
-    /** @var string[] */
+    /** @var array<int, string> */
     private $classesAllowedToBeExtendedInTests;
 
     /** @var string */
     private $unitTestNamespaceContainsString;
 
     /**
-     * @param string[] $classesAllowedToBeExtendedInTests
+     * @param array<int, string> $classesAllowedToBeExtendedInTests
      */
     public function __construct(array $classesAllowedToBeExtendedInTests, string $unitTestNamespaceContainsString)
     {
