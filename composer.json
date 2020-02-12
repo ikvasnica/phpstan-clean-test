@@ -18,17 +18,17 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.2",
         "nette/utils": "~3.0",
-        "nikic/php-parser": "^4.2.3",
-        "phpstan/phpstan": "~0.11.15"
+        "nikic/php-parser": "^4.3",
+        "phpstan/phpstan": "~0.12"
     },
     "require-dev": {
         "ergebnis/phpstan-rules": "^0.14.2",
         "php-coveralls/php-coveralls": "2.*",
-        "phpstan/phpstan-strict-rules": "~0.11.1",
-        "phpunit/phpunit": "^7.5.2",
-        "symplify/easy-coding-standard": "^6.1"
+        "phpstan/phpstan-strict-rules": "~0.12",
+        "phpunit/phpunit": "^8.5.2 || ^9.0.0",
+        "symplify/easy-coding-standard": "^7.2.2"
     },
 	"suggest": {
 		"phpstan/phpstan-deprecation-rules": "Rules for disallowing deprecation code.",
@@ -42,8 +42,8 @@
 			"@phpstan",
 			"phpunit"
 		],
-		"cs": "ecs check src tests --ansi",
-		"cs-fix": "ecs check src tests --fix --ansi",
+		"cs": "ecs check --ansi",
+		"cs-fix": "ecs check --fix --ansi",
 		"phpstan": "phpstan analyse --ansi"
 	},
 	"autoload": {
