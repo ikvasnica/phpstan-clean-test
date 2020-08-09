@@ -8,6 +8,7 @@ use Nette\Utils\Strings;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPUnit\Framework\TestCase;
+use function strtolower;
 
 final class CallToAssertDetector
 {
@@ -17,11 +18,17 @@ final class CallToAssertDetector
             return false;
         }
 
-        if ($scope->getClassReflection() === null || $scope->getClassReflection()->getAncestorWithClassName(TestCase::class) === null) {
+        if ($scope->getClassReflection() === null) {
+            return false;
+        }
+
+        $phpUnitTestCaseAncestor = $scope->getClassReflection()->getAncestorWithClassName(TestCase::class);
+        if ($phpUnitTestCaseAncestor === null) {
             return false;
         }
 
         return $node->name instanceof Node\Identifier
+            && $phpUnitTestCaseAncestor->hasMethod($node->name->toString())
             && Strings::startsWith(strtolower($node->name->toString()), 'assert');
     }
 }

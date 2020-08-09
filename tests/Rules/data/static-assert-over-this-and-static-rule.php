@@ -24,5 +24,14 @@ final class StaticAssertOverThisAndStaticRule extends DummyTestCase
 		Assert::assertCount(1, [1, 2]);
 		Assert::assertTrue(false);
 		\PHPUnit\Framework\Assert::assertTrue(true);
+		$this->assertCustomPrivateMethod();
+		static::assertCustomPrivateMethod();
+		$this->assertSomethingSpecial();
+		static::assertSomethingSpecial();
+	}
+
+	private function assertCustomPrivateMethod(): void
+	{
+		// intentionally does nothing
 	}
 }
