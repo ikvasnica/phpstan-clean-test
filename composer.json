@@ -28,7 +28,7 @@
         "php-coveralls/php-coveralls": "2.*",
         "phpstan/phpstan-strict-rules": "~0.12",
         "phpunit/phpunit": "^8.5.2 || ^9.0.0",
-        "symplify/easy-coding-standard": "^7.2.2"
+        "symplify/easy-coding-standard": "~7.2.2"
     },
 	"suggest": {
 		"phpstan/phpstan-deprecation-rules": "Rules for disallowing deprecation code.",
