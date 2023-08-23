@@ -8,7 +8,9 @@ use Nette\Utils\Strings;
 
 final class TestClassDetector
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private const TEST_CLASS_ENDING_STRING = 'Test';
 
     public static function isUnitTest(string $namespace, string $className, string $unitTestNamespacePattern): bool

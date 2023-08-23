@@ -37,8 +37,8 @@ final class AssertSameOverAssertEqualsRule implements Rule
             return [];
         }
 
-        $firstType = $scope->getType($node->args[0]->value);
-        $secondType = $scope->getType($node->args[1]->value);
+        $firstType = $scope->getType($node->getArgs()[0]->value);
+        $secondType = $scope->getType($node->getArgs()[1]->value);
 
         if ($this->isScalarType($firstType) || $this->isScalarType($secondType)) {
             return ['Using "assertEquals" is forbidden with a scalar type as an argument. Use "assertSame" instead.'];
