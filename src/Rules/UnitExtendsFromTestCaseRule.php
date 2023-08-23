@@ -15,10 +15,14 @@ use function sprintf;
  */
 final class UnitExtendsFromTestCaseRule implements Rule
 {
-    /** @var array<int, string> */
+    /**
+     * @var array<int, string>
+     */
     private $classesAllowedToBeExtendedInTests;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $unitTestNamespaceContainsString;
 
     /**

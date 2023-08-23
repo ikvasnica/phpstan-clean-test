@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace ikvasnica\PHPStan\Rules;
 
 use ikvasnica\PHPStan\Rules\Helpers\TestClassDetector;
-use function in_array;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
+use function in_array;
 use function sprintf;
 
 /**
@@ -16,16 +16,24 @@ use function sprintf;
  */
 final class DisallowSetupAndConstructorRule implements Rule
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private const SETUP_METHOD_NAME = 'setUp';
 
-    /** @var array<string> */
+    /**
+     * @var array<string>
+     */
     private const DISALLOWED_METHODS = ['__construct', self::SETUP_METHOD_NAME];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $unitTestNamespaceContainsString;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $allowSetupInUnitTests;
 
     public function __construct(string $unitTestNamespaceContainsString, bool $allowSetupInUnitTests)

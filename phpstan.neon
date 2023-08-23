@@ -16,5 +16,6 @@ parameters:
 		unitTestNamespaceContainsString: Rules
 
 	ergebnis:
-		classesAllowedToBeExtended:
-			- PHPStan\Testing\RuleTestCase
+		noExtends:
+			classesAllowedToBeExtended:
+				- PHPStan\Testing\RuleTestCase

@@ -17,10 +17,14 @@ use function sprintf;
  */
 final class NoNullableArgumentRule implements Rule
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private const TEST_ANNOTATION = '@test';
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private const TEST_METHOD_NAME_BEGINNING = 'test';
 
     public function getNodeType(): string
